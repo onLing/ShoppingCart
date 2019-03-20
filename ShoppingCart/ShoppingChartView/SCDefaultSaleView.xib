@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="SCDefaultSaleView">
+            <rect key="frame" x="0.0" y="0.0" width="407" height="49"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g2Q-up-7KG">
+                    <rect key="frame" x="10" y="9.5" width="70" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="Nax-W5-U15"/>
+                        <constraint firstAttribute="width" constant="70" id="iWv-pI-yqs"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <state key="normal" title="  全选" image="icon_unsel_gray">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="selectedAllAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="npa-Qd-UbB"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="合计：99999.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ykU-NW-Anm">
+                    <rect key="frame" x="90" y="0.0" width="128.5" height="49"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XFK-Ah-efe">
+                    <rect key="frame" x="307" y="0.0" width="100" height="49"/>
+                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="100" id="tju-4G-fTZ"/>
+                    </constraints>
+                    <state key="normal" title="去结算(5)">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="saleAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="QzK-IC-syh"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="ykU-NW-Anm" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="8JR-GB-0dz"/>
+                <constraint firstItem="XFK-Ah-efe" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="FHd-68-GVf"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="XFK-Ah-efe" secondAttribute="trailing" id="VvI-UL-7ue"/>
+                <constraint firstItem="ykU-NW-Anm" firstAttribute="leading" secondItem="g2Q-up-7KG" secondAttribute="trailing" constant="10" id="aXH-Kd-dsC"/>
+                <constraint firstItem="g2Q-up-7KG" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="gfz-MT-UmW"/>
+                <constraint firstItem="g2Q-up-7KG" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="tY7-Da-4iH"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="ykU-NW-Anm" secondAttribute="bottom" id="u4y-HF-qGT"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="XFK-Ah-efe" secondAttribute="bottom" id="urX-8s-c4a"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="saleButton" destination="XFK-Ah-efe" id="3f1-Z7-MOx"/>
+                <outlet property="selButton" destination="g2Q-up-7KG" id="gKv-U7-5Us"/>
+                <outlet property="totalValueLabel" destination="ykU-NW-Anm" id="G7q-DQ-Jrw"/>
+            </connections>
+            <point key="canvasLocation" x="79.200000000000003" y="-229.83508245877064"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="icon_unsel_gray" width="22" height="22"/>
+    </resources>
+</document>
