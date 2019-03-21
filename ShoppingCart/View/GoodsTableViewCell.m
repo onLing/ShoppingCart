@@ -8,6 +8,7 @@
 
 #import "GoodsTableViewCell.h"
 #import "GoodsCounterView.h"
+#import "UIImageView+WebCache.h"
 
 @interface GoodsTableViewCell ()
 @property (weak, nonatomic) IBOutlet UIButton *selButton;
@@ -54,6 +55,7 @@
     self.nameLabel.text = [model getName];
     self.priceLabel.text = [model getPriceString];
     self.buyCountView.count = [model getBuyCount];
+    [self.goodsImageView sd_setImageWithURL:[NSURL URLWithString:[model getImageUrl]]];
 }
 
 #pragma mark -
