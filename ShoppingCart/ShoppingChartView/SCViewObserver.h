@@ -13,7 +13,7 @@
 
 @protocol SCViewObserver <NSObject>
 
-@optional
+@required
 - (void)registerObserver:(id<SCControlProtocol>)observer;
 - (void)removeObserver;
 

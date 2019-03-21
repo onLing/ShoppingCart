@@ -5,7 +5,7 @@
 //  Created by jqq on 2019/3/20.
 //  Copyright © 2019 jqq. All rights reserved.
 //
-
+//  商品数据模型
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
