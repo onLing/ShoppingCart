@@ -9,6 +9,7 @@
 #import "GoodsTableViewCell.h"
 #import "GoodsCounterView.h"
 #import "UIImageView+WebCache.h"
+#import "IQKeyboardManager.h"
 
 @interface GoodsTableViewCell ()
 @property (weak, nonatomic) IBOutlet UIButton *selButton;
@@ -37,6 +38,11 @@
             [weakSelf.observer sc_tableViewCellDidClickPlusButton:weakSelf];
         }
     };
+    self.buyCountView.textEditingEndBlock = ^(UITextField * _Nonnull textField) {
+        if (weakSelf.observer && [weakSelf.observer respondsToSelector:@selector(sc_tableViewCell:buyCountTextFieldEditingEnd:)]) {
+            [weakSelf.observer sc_tableViewCell:weakSelf buyCountTextFieldEditingEnd:textField];
+        }
+    };
 }
 
 
@@ -55,6 +61,7 @@
     self.nameLabel.text = [model getName];
     self.priceLabel.text = [model getPriceString];
     self.buyCountView.count = [model getBuyCount];
+    self.buyCountView.maxCount = [model getMaxtBuyCount];
     [self.goodsImageView sd_setImageWithURL:[NSURL URLWithString:[model getImageUrl]]];
 }
 

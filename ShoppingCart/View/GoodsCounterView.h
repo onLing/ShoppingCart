@@ -12,8 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface GoodsCounterView : UIView
 @property (nonatomic, assign) NSInteger count;
+@property (nonatomic, assign) NSInteger maxCount;
 @property (nonatomic, copy) void(^minusBlock)(void);
 @property (nonatomic, copy) void(^plusBlock)(void);
+@property (nonatomic, copy) void(^textEditingEndBlock)(UITextField *textField);
 @end
 
 NS_ASSUME_NONNULL_END

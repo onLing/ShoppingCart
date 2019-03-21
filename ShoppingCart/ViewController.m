@@ -12,12 +12,21 @@
 #import "GoodsModelAdapter.h"
 #import "SCGoodsModelProtocol.h"
 #import "GoodsModel.h"
+#import "IQKeyboardManager.h"
 
 @interface ViewController () <ShoppingCartViewDatasource, ShoppingCartViewDelegate>
 @property (nonatomic, strong) ShoppingCartView *shoppingCartView;
 @end
 
 @implementation ViewController
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [IQKeyboardManager sharedManager].enableAutoToolbar = YES;
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
+}
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     self.shoppingCartView.frame = self.view.bounds;
@@ -28,6 +37,9 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"添加商品" style:UIBarButtonItemStylePlain target:self action:@selector(addGoods)];
     [self initSCView];
     [self requestData];
+    
+    [IQKeyboardManager sharedManager].toolbarDoneBarButtonItemText = @"完成";
+    [IQKeyboardManager sharedManager].previousNextDisplayMode = IQPreviousNextDisplayModeAlwaysHide;
 }
 
 ///初始化购物车视图

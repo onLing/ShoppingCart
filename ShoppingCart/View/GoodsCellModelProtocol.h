@@ -13,6 +13,7 @@
 
 @required
 - (NSInteger)getBuyCount;
+- (NSInteger)getMaxtBuyCount;
 - (NSString *)getName;
 - (NSString *)getImageUrl;
 - (NSString *)getPriceString;

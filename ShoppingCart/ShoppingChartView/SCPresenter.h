@@ -22,6 +22,8 @@
 - (void)sc_tableViewCellDidClickPlusButton:(UITableViewCell *)cell;
 ///商品-1
 - (void)sc_tableViewCellDidClickMinusButton:(UITableViewCell *)cell;
+///商品数量输入
+- (void)sc_tableViewCell:(UITableViewCell *)cell buyCountTextFieldEditingEnd:(UITextField *)textField;
 
 @end
 

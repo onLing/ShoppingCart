@@ -25,6 +25,9 @@
 - (NSInteger)getBuyCount {
     return self.buyCount;
 }
+- (NSInteger)getMaxtBuyCount {
+    return self.goods.maxBuyCount;
+}
 - (NSString *)getName {
     return self.goods.name;
 }
@@ -55,15 +58,12 @@
     self.selected = selected;
 }
 - (void)sc_minusBuyCount {
-    if (self.buyCount <= 0) {
-        return;
-    }
     self.buyCount--;
 }
 - (void)sc_plusBuyCount {
-    if (self.buyCount >= self.goods.maxBuyCount) {
-        return;
-    }
     self.buyCount++;
+}
+- (void)sc_setBuyCount:(NSInteger)buyCount {
+    self.buyCount = buyCount;
 }
 @end

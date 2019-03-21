@@ -233,10 +233,7 @@
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     id<SCGoodsModelProtocol> obj = [self.datasource sc_shoppingCartView:self goodsModelAtIndexPath:indexPath];
     if ([obj sc_getBuyCount] >= [obj sc_getMaxBuyCount]) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:[NSString stringWithFormat:@"最多只能购买%ld件哦！", [obj sc_getMaxBuyCount]] preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil];
-        [alert addAction:cancel];
-        [[self responseViewController] presentViewController:alert animated:YES completion:nil];
+        [self maxBuyCountAlert:[obj sc_getMaxBuyCount]];
         return;
     }
     [obj sc_plusBuyCount];
@@ -246,7 +243,29 @@
 - (void)sc_tableViewCellDidClickMinusButton:(UITableViewCell *)cell {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     id<SCGoodsModelProtocol> obj = [self.datasource sc_shoppingCartView:self goodsModelAtIndexPath:indexPath];
+    if ([obj sc_getBuyCount] <= 1) {
+        return;
+    }
     [obj sc_minusBuyCount];
+    [self reloadData];
+}
+- (void)sc_tableViewCell:(UITableViewCell *)cell buyCountTextFieldEditingEnd:(UITextField *)textField {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    id<SCGoodsModelProtocol> obj = [self.datasource sc_shoppingCartView:self goodsModelAtIndexPath:indexPath];
+    NSInteger maxCount = [obj sc_getMaxBuyCount];
+    NSInteger buyCount = [textField.text integerValue];
+    ///最低购买数量为1
+    if (buyCount <= 0) {
+        buyCount = 1;
+        textField.text = [NSString stringWithFormat:@"%ld", buyCount];
+    }
+    ///不能大于最高购买数量
+    if (buyCount > maxCount) {
+        buyCount = maxCount;
+        textField.text = [NSString stringWithFormat:@"%ld", maxCount];
+        [self maxBuyCountAlert:maxCount];
+    }
+    [obj sc_setBuyCount:buyCount];
     [self reloadData];
 }
 
@@ -288,5 +307,10 @@
                                   constant:0];
     [self addConstraints:@[topConstraint, leftConstraint, bottomConstraint, rightConstraint]];
 }
-
+- (void)maxBuyCountAlert:(NSInteger)maxCount {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:[NSString stringWithFormat:@"最多只能购买%ld件哦！", maxCount] preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:cancel];
+    [[self responseViewController] presentViewController:alert animated:YES completion:nil];
+}
 @end

@@ -11,7 +11,7 @@
 @interface GoodsCounterView ()
 @property (nonatomic, strong) UIButton *minusButton;
 @property (nonatomic, strong) UIButton *plusButton;
-@property (nonatomic, strong) UILabel *countLabel;
+@property (nonatomic, strong) UITextField *countTextField;
 @end
 
 @implementation GoodsCounterView
@@ -46,13 +46,17 @@
     [self addSubview:plusButton];
     _plusButton = plusButton;
     
-    UILabel *countLabel = [[UILabel alloc] init];
-    countLabel.backgroundColor = [UIColor colorWithRed:245/255.f green:245/255.f blue:247/255.f alpha:1.f];
-    countLabel.textColor = [UIColor blackColor];
-    countLabel.font = [UIFont systemFontOfSize:13];
-    countLabel.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:countLabel];
-    _countLabel = countLabel;
+    UITextField *countTextField = [[UITextField alloc] init];
+    countTextField.backgroundColor = [UIColor colorWithRed:245/255.f green:245/255.f blue:247/255.f alpha:1.f];
+    countTextField.textColor = [UIColor blackColor];
+    countTextField.font = [UIFont systemFontOfSize:13];
+    countTextField.contentHorizontalAlignment = UIControlContentVerticalAlignmentCenter;
+    countTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    countTextField.textAlignment = NSTextAlignmentCenter;
+    countTextField.keyboardType = UIKeyboardTypeNumberPad;
+    [countTextField addTarget:self action:@selector(buyCountTextFieldEditingDidEnd:) forControlEvents:UIControlEventEditingDidEnd];
+    [self addSubview:countTextField];
+    _countTextField = countTextField;
 }
 
 - (void)layoutSubviews {
@@ -60,9 +64,26 @@
     CGFloat btnWidth = 25.f;
     self.minusButton.frame = CGRectMake(0, 0, btnWidth, self.bounds.size.height);
     self.plusButton.frame = CGRectMake(self.bounds.size.width - btnWidth, 0, btnWidth, self.bounds.size.height);
-    CGFloat countLabelWidth = MAX(0, self.bounds.size.width - CGRectGetWidth(self.minusButton.frame) - CGRectGetWidth(self.plusButton.frame));
-    CGFloat countLabelHeight = 20.f;
-    self.countLabel.frame = CGRectMake(CGRectGetMaxX(self.minusButton.frame), CGRectGetMidY(self.minusButton.frame) - countLabelHeight / 2.f, countLabelWidth, countLabelHeight);
+    CGFloat countTfWidth = MAX(0, self.bounds.size.width - CGRectGetWidth(self.minusButton.frame) - CGRectGetWidth(self.plusButton.frame));
+    CGFloat countTfHeight = 20.f;
+    self.countTextField.frame = CGRectMake(CGRectGetMaxX(self.minusButton.frame), CGRectGetMidY(self.minusButton.frame) - countTfHeight / 2.f, countTfWidth, countTfHeight);
+}
+
+- (void)updateMinusPlusButtonStatus {
+    if (self.count > 1) {
+        self.minusButton.enabled = YES;
+        [self.minusButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    }else {
+        self.minusButton.enabled = NO;
+        [self.minusButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    }
+    if (self.maxCount > 0 && self.count >= self.maxCount) {
+        self.plusButton.enabled = NO;
+        [self.plusButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    }else {
+        self.plusButton.enabled = YES;
+        [self.plusButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    }
 }
 
 - (void)minusAction {
@@ -75,16 +96,19 @@
         self.plusBlock();
     }
 }
+- (void)buyCountTextFieldEditingDidEnd:(UITextField *)textField {
+    if (self.textEditingEndBlock) {
+        self.textEditingEndBlock(textField);
+    }
+}
 
 - (void)setCount:(NSInteger)count {
     _count = count;
-    self.countLabel.text = [NSString stringWithFormat:@"%ld", count];
-    if (count > 1) {
-        self.minusButton.enabled = YES;
-        [self.minusButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    }else {
-        self.minusButton.enabled = NO;
-        [self.minusButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-    }
+    self.countTextField.text = [NSString stringWithFormat:@"%ld", count];
+    [self updateMinusPlusButtonStatus];
+}
+- (void)setMaxCount:(NSInteger)maxCount {
+    _maxCount = maxCount;
+    [self updateMinusPlusButtonStatus];
 }
 @end

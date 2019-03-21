@@ -24,6 +24,8 @@
 - (void)sc_minusBuyCount;
 ///+1
 - (void)sc_plusBuyCount;
+///设置购买数量
+- (void)sc_setBuyCount:(NSInteger)buyCount;
 
 @end
 
